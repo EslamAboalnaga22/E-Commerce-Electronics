@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

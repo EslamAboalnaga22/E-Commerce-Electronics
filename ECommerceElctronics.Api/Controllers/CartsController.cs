@@ -12,11 +12,13 @@ using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CartsController : BasesController
     {
         public CartsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
@@ -44,6 +46,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
         [HttpGet]
         [Route("CartUser/{userId}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetCartsByUserId(int userId)
         {
             var query = new GetCartsByUserIdQuery(userId);
@@ -54,6 +57,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddCart( CreateCartRequest cart)
         {
             if (!ModelState.IsValid)

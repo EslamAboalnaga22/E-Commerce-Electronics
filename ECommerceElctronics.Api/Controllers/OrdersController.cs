@@ -15,11 +15,13 @@ using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OrdersController : BasesController
     {
         public OrdersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
@@ -38,6 +40,7 @@ namespace ECommerceElctronics.Api.Controllers
 
         [HttpGet]
         [Route("OrderUesr/{userId}")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> GetOrdersByUserId(int userId)
         {
             var query = new GetAllOrdersByUserIdQuery(userId);
@@ -49,7 +52,6 @@ namespace ECommerceElctronics.Api.Controllers
 
         [HttpGet]
         [Route("CartUesr/{cartId}")]
-
         public async Task<IActionResult> GetOrdersByCartId(int cartId)
         {
             var query = new GetAllOrdersByCartIdQuery(cartId);
@@ -73,6 +75,7 @@ namespace ECommerceElctronics.Api.Controllers
         //}
 
         [HttpPut("{orderId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateOrder(int orderId, [FromForm] UpdateOrderRequest orderRequest)
         {
             if (!ModelState.IsValid)
@@ -88,6 +91,7 @@ namespace ECommerceElctronics.Api.Controllers
             return NoContent();
         }
         [HttpDelete("{orderId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrder(int orderId)
         {
             if (!ModelState.IsValid)

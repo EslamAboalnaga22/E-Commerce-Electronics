@@ -9,6 +9,7 @@ using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProduct([FromForm] CreateProductRequest brand)
         {
             if (!ModelState.IsValid)
@@ -54,6 +56,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPut("{productId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int productId, [FromForm] UpdateProductRequest productRequest)
         {
             if (!ModelState.IsValid)
@@ -70,6 +73,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpDelete("{productId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             if (!ModelState.IsValid)

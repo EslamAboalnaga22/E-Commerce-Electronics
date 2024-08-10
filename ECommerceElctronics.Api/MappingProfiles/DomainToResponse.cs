@@ -31,6 +31,8 @@ namespace ECommerceElctronics.Api.MappingProfiles
                 .ForMember(
                    dest => dest.OrderId,
                    opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<User, GetUserDetailsResponse>();
         }
 
     }

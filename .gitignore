@@ -9,6 +9,7 @@
 # Me
 appsettings.json
 appsettings.Development.json
+Program.cs
 
 
 # User-specific files

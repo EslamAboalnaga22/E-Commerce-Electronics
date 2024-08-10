@@ -9,6 +9,7 @@ using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddCategory([FromBody] CreateCategoryRequest category)
         {
             if (!ModelState.IsValid)
@@ -54,6 +56,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory([FromBody] Category category)
         {
             if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace ECommerceElctronics.Api.Controllers
             return NoContent();
         }
         [HttpDelete("{categoryId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
             if (!ModelState.IsValid)

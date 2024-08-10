@@ -9,11 +9,13 @@ using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsersController : BasesController
     {
         public UsersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
@@ -30,15 +32,15 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("{brandId}")]
-        //public async Task<IActionResult> GetByIdBrand(int brandId)
-        //{
-        //    var query = new GetByIdBrandQuery(brandId);
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetByIdUser(int userId)
+        {
+            var query = new GetByIdUserQuery(userId);
 
-        //    var result = await _mediator.Send(query);
+            var result = await _mediator.Send(query);
 
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] User user)

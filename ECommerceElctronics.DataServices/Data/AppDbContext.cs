@@ -1,4 +1,6 @@
 ﻿using ECommerceElctronics.Entities.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ECommerceElctronics.DataServices.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, IdentityRole<int>,int>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) :base(options) { }
         
@@ -41,6 +43,7 @@ namespace ECommerceElctronics.DataServices.Data
 
 
             modelBuilder.Entity<Brand>().Property(x => x.Id).ValueGeneratedOnAdd();
+            //modelBuilder.Entity<User>().Property(x => x.Id).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Cart>()
                 .HasOne(u => u.User)

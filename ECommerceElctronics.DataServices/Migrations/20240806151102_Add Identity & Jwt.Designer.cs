@@ -4,6 +4,7 @@ using ECommerceElctronics.DataServices.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceElctronics.DataServices.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240806151102_Add Identity & Jwt")]
+    partial class AddIdentityJwt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Cart", b =>
@@ -57,7 +60,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Category", b =>
@@ -74,7 +77,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Order", b =>
@@ -105,7 +108,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Product", b =>
@@ -146,7 +149,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.User", b =>
@@ -419,7 +422,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.User", b =>
                 {
-                    b.OwnsMany("ECommerceElctronics.Entities.Models.User.RefreshTokens#ECommerceElctronics.Entities.Models.RefreshToken", "RefreshTokens", b1 =>
+                    b.OwnsMany("ECommerceElctronics.Entities.Models.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
@@ -445,7 +448,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                             b1.HasKey("UserId", "Id");
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

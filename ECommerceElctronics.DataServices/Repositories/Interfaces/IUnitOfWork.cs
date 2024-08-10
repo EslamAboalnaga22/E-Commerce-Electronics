@@ -14,6 +14,7 @@ namespace ECommerceElctronics.DataServices.Repositories.Interfaces
         IUserRepository Users { get; }
         ICartRepository Carts { get; }
         IOrderRepository Orders { get; }
+        //IAccountRepository Accounts { get; }
 
         Task<bool> CompleteAsync();
     }
