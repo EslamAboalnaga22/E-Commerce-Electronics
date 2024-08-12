@@ -1,5 +1,7 @@
-﻿using ECommerceElctronics.Api.Services;
+﻿
+using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Dtos.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -61,6 +63,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost("AddRole")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> AddRole(AddRoleModel model)
         {
             if (!ModelState.IsValid)
@@ -75,6 +78,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("RefreshToken")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RefreshToken()
         {
             var refreshToken = Request.Cookies["refreshToken"];
@@ -90,6 +94,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost("RevokeToken")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RevokeToken(RevokeTokenModel model)
         {
             var token = model.Token;

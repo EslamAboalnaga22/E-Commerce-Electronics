@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerceElctronics.Api.Services
+namespace ECommerceElctronics.DataServices.Services
 {
     public interface IAuthServices
     {

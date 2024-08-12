@@ -4,7 +4,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using ECommerceElctronics.Entities.Models;
 
-namespace ECommerceElctronics.Api.Services
+namespace ECommerceElctronics.DataServices.Services
 {
     public class MailServices : IMailServices
     {

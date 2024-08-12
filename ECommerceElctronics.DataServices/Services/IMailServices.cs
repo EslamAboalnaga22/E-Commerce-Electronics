@@ -1,6 +1,6 @@
 ﻿using ECommerceElctronics.Entities.Dtos.Account;
 
-namespace ECommerceElctronics.Api.Services
+namespace ECommerceElctronics.DataServices.Services
 {
     public interface IMailServices
     {

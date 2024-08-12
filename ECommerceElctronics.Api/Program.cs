@@ -1,7 +1,8 @@
-using ECommerceElctronics.Api.Services;
+
 using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
+using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Stripe;
 using System.Text;
 
 namespace ECommerceElctronics.Api
@@ -56,11 +58,17 @@ namespace ECommerceElctronics.Api
                     };
                 });
 
-            // For Forget Password
+            // Forget Password & Reset Password
             builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 
             builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
                 options.TokenLifespan = TimeSpan.FromHours(2));
+
+            // Stripe
+            builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<CustomerService>();
+            builder.Services.AddScoped<ChargeService>();
+            StripeConfiguration.ApiKey = builder.Configuration.GetValue<string>("StripeOptions:SecretKey");
 
 
             builder.Services.AddControllers();
@@ -108,6 +116,7 @@ namespace ECommerceElctronics.Api
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IMailServices, MailServices>();
+            builder.Services.AddScoped<IStripeServices, StripeServices>();
 
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));

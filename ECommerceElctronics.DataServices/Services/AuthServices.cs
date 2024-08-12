@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Net.Mail;
 using System.Net;
 
-namespace ECommerceElctronics.Api.Services
+namespace ECommerceElctronics.DataServices.Services
 {
     public class AuthServices : IAuthServices
     {
@@ -59,7 +59,7 @@ namespace ECommerceElctronics.Api.Services
                 audience: jwt.Audience,
                 signingCredentials: signingCredentials,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(3)
+                expires: DateTime.Now.AddHours(1)
             );
 
             return jwtSecurityToken;
@@ -75,7 +75,7 @@ namespace ECommerceElctronics.Api.Services
             return new RefreshToken
             {
                 Token = Convert.ToBase64String(randomNumber),
-                ExpireOn = DateTime.Now.AddMinutes(1),
+                ExpireOn = DateTime.Now.AddMinutes(15),
                 CreateOn = DateTime.Now,
             };
         }
