@@ -1,19 +1,13 @@
 ﻿using ECommerceElctronics.Entities.Dtos.Account;
 using ECommerceElctronics.Entities.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Net.Mail;
-using System.Net;
 
 namespace ECommerceElctronics.DataServices.Services
 {

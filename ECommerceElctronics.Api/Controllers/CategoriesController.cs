@@ -1,26 +1,17 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands;
-using ECommerceElctronics.Api.CQRS.Commands.BrandFolder;
 using ECommerceElctronics.Api.CQRS.Commands.CategoryFolder;
-using ECommerceElctronics.Api.CQRS.Queries;
-using ECommerceElctronics.Api.CQRS.Queries.BrandFolder;
 using ECommerceElctronics.Api.CQRS.Queries.CategoryFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
-    public class CategoriesController : BasesController
+    public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
-        public CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
-        {
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {

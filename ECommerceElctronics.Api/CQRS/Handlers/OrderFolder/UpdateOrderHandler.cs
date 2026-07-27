@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ECommerceElctronics.Api.CQRS.Commands.OrderFolder;
-using ECommerceElctronics.Api.CQRS.Commands.ProductFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Models;
 using MediatR;

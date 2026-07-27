@@ -1,33 +1,17 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands;
-using ECommerceElctronics.Api.CQRS.Commands.BrandFolder;
-using ECommerceElctronics.Api.CQRS.Commands.CartFolder;
 using ECommerceElctronics.Api.CQRS.Commands.OrderFolder;
-using ECommerceElctronics.Api.CQRS.Commands.ProductFolder;
-using ECommerceElctronics.Api.CQRS.Commands.UserFolder;
-using ECommerceElctronics.Api.CQRS.Handlers.CartFolder;
-using ECommerceElctronics.Api.CQRS.Queries;
-using ECommerceElctronics.Api.CQRS.Queries.BrandFolder;
-using ECommerceElctronics.Api.CQRS.Queries.CartFolder;
 using ECommerceElctronics.Api.CQRS.Queries.OrderFolder;
-using ECommerceElctronics.Api.CQRS.Queries.UserFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
-using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class OrdersController : BasesController
+    public class OrdersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
-        public OrdersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
-        {
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllOrders()
         {

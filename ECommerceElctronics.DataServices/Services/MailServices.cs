@@ -1,18 +1,14 @@
-﻿using ECommerceElctronics.Entities.Dtos.Account;
+﻿using ECommerceElctronics.Entities.Models;
+using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using MailKit.Net.Smtp;
-using ECommerceElctronics.Entities.Models;
 
 namespace ECommerceElctronics.DataServices.Services
 {
-    public class MailServices : IMailServices
+    public class MailServices(IOptions<EmailConfiguration> options) : IMailServices
     {
-        private readonly EmailConfiguration emailConfiguration;
-        public MailServices(IOptions<EmailConfiguration> options)
-        {
-            emailConfiguration = options.Value;
-        }
+        private readonly EmailConfiguration emailConfiguration = options.Value;
+
         public async Task<bool> SendMailAsync(string email, string token)
         {
             MimeMessage emailMassage = new ();
@@ -25,8 +21,11 @@ namespace ECommerceElctronics.DataServices.Services
 
             emailMassage.Subject = "Reset Password Token";
 
-            BodyBuilder emailBodyBuilder = new();
-            emailBodyBuilder.TextBody = token;
+            BodyBuilder emailBodyBuilder = new()
+            {
+                TextBody = token
+            };
+
             emailMassage.Body = emailBodyBuilder.ToMessageBody();
 
             // SmtpClient Class form Mailkit

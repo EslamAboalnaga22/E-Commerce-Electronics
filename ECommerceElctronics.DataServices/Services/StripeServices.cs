@@ -3,18 +3,11 @@ using Stripe;
 
 namespace ECommerceElctronics.DataServices.Services
 {
-    public class StripeServices : IStripeServices
+    public class StripeServices(TokenService tokenService, CustomerService customerService, ChargeService chargeService) : IStripeServices
     {
-        private readonly TokenService _tokenService;
-        private readonly CustomerService _customerService;
-        private readonly ChargeService _chargeService;
-
-        public StripeServices(TokenService tokenService, CustomerService customerService, ChargeService chargeService)
-        {
-            _tokenService = tokenService;
-            _customerService = customerService;
-            _chargeService = chargeService;
-        }
+        private readonly TokenService _tokenService = tokenService;
+        private readonly CustomerService _customerService = customerService;
+        private readonly ChargeService _chargeService = chargeService;
 
         public async Task<CustomerBankAccountResource> CreateCustomer(CreateCustomerBankAccountResource resource)
         {
