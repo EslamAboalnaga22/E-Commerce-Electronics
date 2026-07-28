@@ -7,7 +7,7 @@ using MediatR;
 
 namespace ECommerceElctronics.Api.CQRS.Handlers.CartFolder
 {
-    public class GetCartsByUserIdHandler : IRequestHandler<GetCartsByUserIdQuery, IEnumerable<GetCartDetailsResponse>>
+    public class GetCartsByUserIdHandler : IRequestHandler<GetCartsByUserIdQuery, IEnumerable<CartDtoResponse>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -17,11 +17,11 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.CartFolder
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<GetCartDetailsResponse>> Handle(GetCartsByUserIdQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<CartDtoResponse>> Handle(GetCartsByUserIdQuery request, CancellationToken cancellationToken)
         {
             var cart = await _unitOfWork.Carts.GetCartByUserId(request.UserId);
 
-            var results = _mapper.Map<IEnumerable<GetCartDetailsResponse>>(cart);
+            var results = _mapper.Map<IEnumerable<CartDtoResponse>>(cart);
 
             foreach (var result in results)
             {
@@ -33,7 +33,7 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.CartFolder
                 }
             }
 
-            return _mapper.Map<IEnumerable<GetCartDetailsResponse>>(results);
+            return _mapper.Map<IEnumerable<CartDtoResponse>>(results);
         }
     }
 }

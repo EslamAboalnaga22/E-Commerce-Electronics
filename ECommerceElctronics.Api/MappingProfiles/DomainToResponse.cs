@@ -19,7 +19,7 @@ namespace ECommerceElctronics.Api.MappingProfiles
                    dest => dest.Category,
                    opt => opt.MapFrom(src => src.Category.Name));
 
-            CreateMap<Cart, GetCartDetailsResponse>();
+            CreateMap<Cart, CartDtoResponse>();
 
             CreateMap<Order, GetOrderDetailssResponse>()
                 .ForMember(

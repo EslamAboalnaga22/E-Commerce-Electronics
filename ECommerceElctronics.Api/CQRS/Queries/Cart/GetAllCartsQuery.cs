@@ -4,7 +4,7 @@ using MediatR;
 
 namespace ECommerceElctronics.Api.CQRS.Queries.CartFolder
 {
-    public class GetAllCartsQuery : IRequest<IEnumerable<GetCartDetailsResponse>>
+    public class GetAllCartsQuery : IRequest<IEnumerable<CartDtoResponse>>
     {
 
     }

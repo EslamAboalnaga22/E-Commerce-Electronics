@@ -3,7 +3,7 @@ using MediatR;
 
 namespace ECommerceElctronics.Api.CQRS.Queries.CartFolder
 {
-    public class GetCartsByCartIdQuery : IRequest<GetCartDetailsResponse>
+    public class GetCartsByCartIdQuery : IRequest<CartDtoResponse>
     {
         public int CartId { get; set; }
 
