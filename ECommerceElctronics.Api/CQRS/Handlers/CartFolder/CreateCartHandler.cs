@@ -22,42 +22,43 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.CartFolder
 
         public async Task<Cart> Handle(CreateCartCommand request, CancellationToken cancellationToken)
         {
-            var Cartresult = request.CartRequest;
+            //var Cartresult = request.CartRequest;
 
-            if (Cartresult == null)
-                return null;
+            //if (Cartresult == null)
+            //    return null;
 
-            Cart cart = new()
-            {
-                UserId = Cartresult.UserId,
-                Date = Cartresult.Date
-            };
+            //Cart cart = new()
+            //{
+            //    UserId = Cartresult.UserId,
+            //    Date = Cartresult.Date
+            //};
 
-            await _unitOfWork.Carts.Add(cart);
+            //await _unitOfWork.Carts.Add(cart);
 
-            var result = await _unitOfWork.CompleteAsync();
+            //var result = await _unitOfWork.CompleteAsync();
 
-            if (result)
-            {
-                foreach (var item in Cartresult.OrdersRequest)
-                {
-                    Order order = new()
-                    {
-                        ProductId = item.ProductId,
-                        Quantitiy = item.Quantitiy,
-                        UserId = cart.UserId,
-                        CartId = cart.Id
-                    };
-                    await _unitOfWork.Orders.Add(order);
-                }
+            //if (result)
+            //{
+            //    foreach (var item in Cartresult.OrdersRequest)
+            //    {
+            //        Order order = new()
+            //        {
+            //            ProductId = item.ProductId,
+            //            Quantitiy = item.Quantitiy,
+            //            UserId = cart.UserId,
+            //            CartId = cart.Id
+            //        };
+            //        await _unitOfWork.Orders.Add(order);
+            //    }
 
-                await _unitOfWork.CompleteAsync();
-            }
-            //TODO
-            // 
-            // Delete the cart added
+            //    await _unitOfWork.CompleteAsync();
+            //}
+            ////TODO
+            //// 
+            //// Delete the cart added
 
-            return cart;
+            //return cart;
+            return default;
         }
     }
 }

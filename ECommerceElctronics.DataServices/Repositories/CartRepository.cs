@@ -17,22 +17,25 @@ namespace ECommerceElctronics.DataServices.Repositories
         }
         public override async Task<IEnumerable<Cart>> GetAll()
         {
-            return await context.Carts
-                .Include(x => x.Orders)
-                .ToListAsync();
+            //return await context.Carts
+            //    .Include(x => x.Orders)
+            //    .ToListAsync();
+            return default;
         }
         public override async Task<Cart> GetById(int id)
         {
-            return await context.Carts
-                .Include(x => x.Orders)
-                .SingleOrDefaultAsync(x => x.Id == id);
+            //return await context.Carts
+            //    .Include(x => x.Orders)
+            //    .SingleOrDefaultAsync(x => x.Id == id);
+            return default;
         }
         public async Task<IEnumerable<Cart>> GetCartByUserId(int userId)
         {
-            return await context.Carts
-                .Include(x => x.Orders)
-                .Where(x => x.UserId == userId)
-                .ToListAsync();
+            //return await context.Carts
+            //    .Include(x => x.Orders)
+            //    .Where(x => x.UserId == userId)
+            //    .ToListAsync();
+            return default;
         }
     }
 }

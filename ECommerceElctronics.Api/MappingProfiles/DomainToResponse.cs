@@ -21,16 +21,16 @@ namespace ECommerceElctronics.Api.MappingProfiles
 
             CreateMap<Cart, GetCartDetailsResponse>();
 
-            CreateMap<Order, GetOrderDetailssResponse>()
-                .ForMember(
-                   dest => dest.Product,
-                   opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(
-                   dest => dest.UserName,
-                   opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
-                .ForMember(
-                   dest => dest.OrderId,
-                   opt => opt.MapFrom(src => src.Id));
+            //CreateMap<Order, GetOrderDetailssResponse>()
+            //    .ForMember(
+            //       dest => dest.Product,
+            //       opt => opt.MapFrom(src => src.Product.Name))
+            //    .ForMember(
+            //       dest => dest.UserName,
+            //       opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+            //    .ForMember(
+            //       dest => dest.OrderId,
+            //       opt => opt.MapFrom(src => src.Id));
 
             CreateMap<User, GetUserDetailsResponse>();
         }

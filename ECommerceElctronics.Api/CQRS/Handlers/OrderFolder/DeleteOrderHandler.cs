@@ -20,15 +20,16 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.OrderFolder
         }
         public async Task<bool> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetById(request.OrderId);
+            //var order = await _unitOfWork.Orders.GetById(request.OrderId);
 
-            if (order == null)
-                return false;
+            //if (order == null)
+            //    return false;
 
-            await _unitOfWork.Orders.Delete(order);
-            await _unitOfWork.CompleteAsync();
+            //await _unitOfWork.Orders.Delete(order);
+            //await _unitOfWork.CompleteAsync();
 
-            return true;
+            //return true;
+            return default;
         }
     }
 }

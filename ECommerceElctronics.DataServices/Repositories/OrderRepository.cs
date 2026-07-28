@@ -19,49 +19,54 @@ namespace ECommerceElctronics.DataServices.Repositories
 
         public override async Task<IEnumerable<Order>> GetAll()
         {
-            return await context.Orders
-                .Include(x => x.Product)
-                .Include(x => x.User)
-                .ToListAsync();
+            //return await context.Orders
+            //    .Include(x => x.Product)
+            //    .Include(x => x.User)
+            //    .ToListAsync();
+            return default;
         }
         public override async Task<Order> GetById(int orderId)
         {
-            return await context.Orders
-                .Include(x => x.Product)
-                .Include(x => x.User)
-                .SingleOrDefaultAsync(x => x.Id == orderId);
+            //return await context.Orders
+            //    .Include(x => x.Product)
+            //    .Include(x => x.User)
+            //    .SingleOrDefaultAsync(x => x.Id == orderId);
+            return default;
         }
         public async Task<IEnumerable<Order>> GetOrderByUserId(int userId)
         {
-            return await context.Orders
-                .Include(x => x.Product)
-                .Include(x => x.User)
-                .Where(x => x.UserId == userId)
-                .ToListAsync();
+            //return await context.Orders
+            //    .Include(x => x.Product)
+            //    .Include(x => x.User)
+            //    .Where(x => x.UserId == userId)
+            //    .ToListAsync();
+            return default;
         }
         public async Task<IEnumerable<Order>> GetOrderByCartId(int cartId)
         {
-            return await context.Orders
-                .Include(x => x.Product)
-                .Include(x => x.User)
-                .Include(x=> x.Cart)
-                .Where(x => x.CartId == cartId)
-                .ToListAsync();
+            //return await context.Orders
+            //    .Include(x => x.Product)
+            //    .Include(x => x.User)
+            //    .Include(x=> x.Cart)
+            //    .Where(x => x.CartId == cartId)
+            //    .ToListAsync();
+            return default;
         }
         public override async Task<bool> Update(Order entity)
         {
-            var order = await GetById(entity.Id);
+            //var order = await GetById(entity.Id);
 
-            if (order == null)
-                return false;
+            //if (order == null)
+            //    return false;
 
-            order.ProductId = entity.ProductId;
-            order.UserId = entity.UserId;
-            order.Quantitiy = entity.Quantitiy;
-            if (entity.CartId != null)
-                order.CartId = entity.CartId;
+            //order.ProductId = entity.ProductId;
+            //order.UserId = entity.UserId;
+            //order.Quantitiy = entity.Quantitiy;
+            //if (entity.CartId != null)
+            //    order.CartId = entity.CartId;
 
-            return true;
+            //return true;
+            return default;
         }
     }
 }

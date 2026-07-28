@@ -17,7 +17,7 @@ namespace ECommerceElctronics.DataServices.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -36,7 +36,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Cart", b =>
@@ -47,9 +47,6 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -57,7 +54,36 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Category", b =>
@@ -74,7 +100,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Order", b =>
@@ -85,27 +111,59 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantitiy")
-                        .HasColumnType("int");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Product", b =>
@@ -146,7 +204,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.User", b =>
@@ -371,17 +429,30 @@ namespace ECommerceElctronics.DataServices.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ECommerceElctronics.Entities.Models.Order", b =>
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.CartItem", b =>
                 {
                     b.HasOne("ECommerceElctronics.Entities.Models.Cart", "Cart")
-                        .WithMany("Orders")
-                        .HasForeignKey("CartId");
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ECommerceElctronics.Entities.Models.Product", "Product")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.Order", b =>
+                {
+                    b.HasOne("ECommerceElctronics.Entities.Models.Product", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("ECommerceElctronics.Entities.Models.User", "User")
                         .WithMany("Orders")
@@ -389,11 +460,18 @@ namespace ECommerceElctronics.DataServices.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.OrderItem", b =>
+                {
+                    b.HasOne("ECommerceElctronics.Entities.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Product", b =>
@@ -419,7 +497,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.User", b =>
                 {
-                    b.OwnsMany("ECommerceElctronics.Entities.Models.User.RefreshTokens#ECommerceElctronics.Entities.Models.RefreshToken", "RefreshTokens", b1 =>
+                    b.OwnsMany("ECommerceElctronics.Entities.Models.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<int>("UserId")
                                 .HasColumnType("int");
@@ -445,7 +523,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                             b1.HasKey("UserId", "Id");
 
-                            b1.ToTable("RefreshToken", (string)null);
+                            b1.ToTable("RefreshToken");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -512,12 +590,17 @@ namespace ECommerceElctronics.DataServices.Migrations
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Cart", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ECommerceElctronics.Entities.Models.Order", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Product", b =>

@@ -18,17 +18,18 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.OrderFolder
         }
         public async Task<bool> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _unitOfWork.Orders.GetById(request.OrderIdRequest);
+            //var order = await _unitOfWork.Orders.GetById(request.OrderIdRequest);
 
-            var result = _mapper.Map<Order>(request.OrderRequest);
+            //var result = _mapper.Map<Order>(request.OrderRequest);
 
-            result.Id = request.OrderIdRequest;
+            //result.Id = request.OrderIdRequest;
 
-            await _unitOfWork.Orders.Update(result);
+            //await _unitOfWork.Orders.Update(result);
 
-            await _unitOfWork.CompleteAsync();
+            //await _unitOfWork.CompleteAsync();
 
-            return true;
+            //return true;
+            return default;
         }
     }
 }

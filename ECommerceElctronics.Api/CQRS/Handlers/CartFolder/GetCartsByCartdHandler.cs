@@ -19,20 +19,21 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.CartFolder
         }
         public async Task<GetCartDetailsResponse> Handle(GetCartsByCartIdQuery request, CancellationToken cancellationToken)
         {
-            var cart = await _unitOfWork.Carts.GetById(request.CartId);
+            //var cart = await _unitOfWork.Carts.GetById(request.CartId);
 
-            var result = _mapper.Map<GetCartDetailsResponse>(cart);
+            //var result = _mapper.Map<GetCartDetailsResponse>(cart);
 
-            var orders = await _unitOfWork.Orders.GetOrderByCartId(result.Id);
+            //var orders = await _unitOfWork.Orders.GetOrderByCartId(result.Id);
 
-            var map = _mapper.Map<IEnumerable<GetOrderDetailssResponse>>(orders);
+            //var map = _mapper.Map<IEnumerable<GetOrderDetailssResponse>>(orders);
 
-            foreach (var item in map)
-            {
-                result.OrdersDetails.Add(item);
-            }
+            //foreach (var item in map)
+            //{
+            //    result.OrdersDetails.Add(item);
+            //}
 
-            return _mapper.Map<GetCartDetailsResponse>(result);
+            //return _mapper.Map<GetCartDetailsResponse>(result);
+            return default;
         }
     }
 }

@@ -18,9 +18,10 @@ namespace ECommerceElctronics.Api.CQRS.Handlers.OrderFolder
         }
         public async Task<IEnumerable<GetOrderDetailssResponse>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
         {
-            var orders = await _unitOfWork.Orders.GetAll();
+            //var orders = await _unitOfWork.Orders.GetAll();
 
-            return _mapper.Map<IEnumerable<GetOrderDetailssResponse>>(orders);
+            //return _mapper.Map<IEnumerable<GetOrderDetailssResponse>>(orders);
+            return default;
         }
     }
 }
