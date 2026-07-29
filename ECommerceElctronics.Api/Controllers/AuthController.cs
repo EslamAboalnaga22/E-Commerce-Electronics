@@ -2,7 +2,6 @@
 using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Dtos.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers

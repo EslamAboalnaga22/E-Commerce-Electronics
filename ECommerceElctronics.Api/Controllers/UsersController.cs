@@ -12,6 +12,7 @@ namespace ECommerceElctronics.Api.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {

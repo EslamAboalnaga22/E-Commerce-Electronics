@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ECommerceElctronics.Entities.Models
+﻿namespace ECommerceElctronics.Entities.Models
 {
     public class OrderItem
     {

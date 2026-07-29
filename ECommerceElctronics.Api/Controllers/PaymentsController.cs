@@ -1,9 +1,7 @@
 ﻿
 using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Dtos.Payment;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stripe;
 
 namespace ECommerceElctronics.Api.Controllers
 {

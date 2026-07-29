@@ -7,7 +7,9 @@
         IBrandRepository Brands { get; }
         IUserRepository Users { get; }
         ICartRepository Carts { get; }
+        ICartItemRepository CartItems { get; }
         IOrderRepository Orders { get; }
+        IOrderItemRepository OrderItems { get; }
         Task<bool> CompleteAsync();
     }
 }

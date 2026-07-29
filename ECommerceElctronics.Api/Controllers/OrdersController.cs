@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
+using ECommerceElctronics.Api.CQRS.Commands.Order;
 using ECommerceElctronics.Api.CQRS.Commands.OrderFolder;
 using ECommerceElctronics.Api.CQRS.Queries.OrderFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
+using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.NetworkInformation;
 
 namespace ECommerceElctronics.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class OrdersController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
         [HttpGet]
@@ -23,11 +26,10 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet]
-        [Route("OrderUesr/{userId}")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetOrdersByUserId(int userId)
+        [Route("{Id}")]
+        public async Task<IActionResult> GetOrdersByCartId(int Id)
         {
-            var query = new GetAllOrdersByUserIdQuery(userId);
+            var query = new GetOrderByIdQuery(Id);
 
             var result = await _mediator.Send(query);
 
@@ -35,28 +37,44 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet]
-        [Route("CartUesr/{cartId}")]
-        public async Task<IActionResult> GetOrdersByCartId(int cartId)
+        [Route("OrderUesr/{userId}")]
+        //[Authorize(Roles = "User")]
+        public async Task<IActionResult> GetOrdersByUserId(int userId)
         {
-            var query = new GetAllOrdersByCartIdQuery(cartId);
+            var query = new GetUserOrdersQuery(userId);
 
             var result = await _mediator.Send(query);
 
             return Ok(result);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddUCart( CreateCartRequest cart)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPut("ChangeStatues/{orderId:int}")]
+        public async Task<IActionResult> ChangeStatuesOrder(int orderId, OrderStatus Status)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    var command = new CreateCartCommand(cart);
+            var command = new ChangeOrderStatusCommand(orderId, Status);
 
-        //    var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-        //    return Ok(result);
-        //}
+            return Ok(result);
+        }
+
+        [HttpPut("Cancel/{orderId:int}")]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new CancelOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+ 
 
         [HttpPut("{orderId}")]
         [Authorize(Roles = "Admin")]
@@ -74,6 +92,7 @@ namespace ECommerceElctronics.Api.Controllers
 
             return NoContent();
         }
+
         [HttpDelete("{orderId}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrder(int orderId)

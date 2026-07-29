@@ -23,7 +23,11 @@ namespace ECommerceElctronics.DataServices.Repositories
 
         public ICartRepository Carts { get; private set; }
 
+        public ICartItemRepository CartItems { get; private set; }
+
         public IOrderRepository Orders { get; private set; }
+
+        public IOrderItemRepository OrderItems { get; private set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -33,7 +37,9 @@ namespace ECommerceElctronics.DataServices.Repositories
             Brands = new BrandRepository(_context);
             Users = new UserRepository(_context);
             Carts = new CartRepository(_context);
+            CartItems = new CartItemRepository(_context);
             Orders = new OrderRepository(_context);
+            OrderItems = new OrderItemRepository(_context);
         }
 
         public async Task<bool> CompleteAsync()

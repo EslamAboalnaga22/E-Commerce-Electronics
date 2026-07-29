@@ -83,7 +83,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItem");
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Category", b =>
@@ -163,7 +163,7 @@ namespace ECommerceElctronics.DataServices.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ECommerceElctronics.Entities.Models.Product", b =>
