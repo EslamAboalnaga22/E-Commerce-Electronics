@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace ECommerceElctronics.Entities.Models
 {
@@ -12,6 +7,6 @@ namespace ECommerceElctronics.Entities.Models
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         [JsonIgnore]
-        public ICollection<Product?> Products { get; set; } = new List<Product?>();
+        public ICollection<Product?> Products { get; set; } = [];
     }
 }

@@ -1,26 +1,16 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands;
-using ECommerceElctronics.Api.CQRS.Commands.BrandFolder;
 using ECommerceElctronics.Api.CQRS.Commands.ProductFolder;
-using ECommerceElctronics.Api.CQRS.Queries;
-using ECommerceElctronics.Api.CQRS.Queries.BrandFolder;
 using ECommerceElctronics.Api.CQRS.Queries.ProductFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
-using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
-    public class ProductsController : BasesController
+    public class ProductsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
-        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
-        {
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {

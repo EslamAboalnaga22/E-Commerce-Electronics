@@ -1,22 +1,15 @@
 ﻿
 using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Dtos.Payment;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Stripe;
 
 namespace ECommerceElctronics.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentsController : ControllerBase
+    public class PaymentsController(IStripeServices stripeServices) : ControllerBase
     {
-        private readonly IStripeServices _stripeServices;
-
-        public PaymentsController(IStripeServices stripeServices)
-        {
-            _stripeServices = stripeServices;
-        }
+        private readonly IStripeServices _stripeServices = stripeServices;
 
         [HttpPost("Customer")]
         public async Task<IActionResult> CraeteCustomerAsync(CreateCustomerBankAccountResource customer)

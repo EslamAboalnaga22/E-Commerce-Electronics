@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ECommerceElctronics.DataServices.Data;
+﻿using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Models;
 using Microsoft.AspNetCore.Identity;
@@ -28,8 +23,11 @@ namespace ECommerceElctronics.DataServices.Repositories
 
         public ICartRepository Carts { get; private set; }
 
+        public ICartItemRepository CartItems { get; private set; }
+
         public IOrderRepository Orders { get; private set; }
-        //public IAccountRepository Accounts { get; private set; }
+
+        public IOrderItemRepository OrderItems { get; private set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -39,8 +37,9 @@ namespace ECommerceElctronics.DataServices.Repositories
             Brands = new BrandRepository(_context);
             Users = new UserRepository(_context);
             Carts = new CartRepository(_context);
+            CartItems = new CartItemRepository(_context);
             Orders = new OrderRepository(_context);
-            //Accounts = new AccountRepository(_userManager, _roleManager);
+            OrderItems = new OrderItemRepository(_context);
         }
 
         public async Task<bool> CompleteAsync()
@@ -49,9 +48,6 @@ namespace ECommerceElctronics.DataServices.Repositories
             return result > 0;
         }
 
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+        public void Dispose() => _context.Dispose();
     }
 }

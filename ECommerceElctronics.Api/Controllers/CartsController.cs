@@ -1,30 +1,18 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands;
-using ECommerceElctronics.Api.CQRS.Commands.BrandFolder;
+using ECommerceElctronics.Api.CQRS.Commands.Cart;
 using ECommerceElctronics.Api.CQRS.Commands.CartFolder;
-using ECommerceElctronics.Api.CQRS.Commands.UserFolder;
-using ECommerceElctronics.Api.CQRS.Handlers.CartFolder;
-using ECommerceElctronics.Api.CQRS.Queries;
-using ECommerceElctronics.Api.CQRS.Queries.BrandFolder;
 using ECommerceElctronics.Api.CQRS.Queries.CartFolder;
-using ECommerceElctronics.Api.CQRS.Queries.UserFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
-using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class CartsController : BasesController
+    //[Authorize(Roles = "Admin")]
+    public class CartsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
-        public CartsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : base(unitOfWork, mapper, mediator)
-        {
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllCarts()
         {
@@ -35,7 +23,7 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{cartId}")]
+        [HttpGet("{cartId:int}")]
         public async Task<IActionResult> GetCartsByCartId(int cartId)
         {
             var query = new GetCartsByCartIdQuery(cartId);
@@ -44,9 +32,10 @@ namespace ECommerceElctronics.Api.Controllers
 
             return Ok(result);
         }
+
         [HttpGet]
-        [Route("CartUser/{userId}")]
-        [Authorize(Roles = "User")]
+        [Route("UserCart/{userId:int}")]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> GetCartsByUserId(int userId)
         {
             var query = new GetCartsByUserIdQuery(userId);
@@ -56,49 +45,68 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> AddCart( CreateCartRequest cart)
+        [HttpPost("Ceckout")]
+        public async Task<IActionResult> Ceckout(int UesrId)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var command = new CreateCartCommand(cart);
+            var command = new CheckoutCommand(UesrId);
 
             var result = await _mediator.Send(command);
 
             return Ok(result);
         }
 
-        //[HttpPut]   
-        //public async Task<IActionResult> UpdateBrand([FromBody] Brand brand)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPost("AddItemToCart")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddItemToCart(AddItemCartRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    var command = new UpdateBrandCommand(brand);
+            var command = new AddItemToCartCommand(request);
 
-        //    var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-        //    if (result == false)
-        //        return BadRequest();
+            return Ok(result);
+        }
 
-        //    return NoContent();
-        //}
-        //[HttpDelete("{brandId}")]
-        //public async Task<IActionResult> DeleteBrand(int brandId)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest();
+        [HttpPut("UpdateQuantity")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateQuantityInCart(UpdateQuantityRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    var command = new DeleteBrandCommand(brandId);
+            var command = new UpdateQuantityCommand(request);
 
-        //    var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-        //    if (result == false)
-        //        return BadRequest();
+            return Ok(result);
+        }
 
-        //    return NoContent();
-        //}
+        [HttpDelete("RemoveItem/{cartItemId:int}")]
+        public async Task<IActionResult> RemoveItemFromCart(int cartItemId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new RemoveItemFromCartCommand(cartItemId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("ClaerCart/{UesrId:int}")]
+        public async Task<IActionResult> ClaerCart(int UesrId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new ClearCartCommand(UesrId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        } 
     }
 }

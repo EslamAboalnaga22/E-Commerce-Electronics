@@ -3,15 +3,13 @@ using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.DataServices.Services;
+using ECommerceElctronics.Entities.Dtos;
 using ECommerceElctronics.Entities.Models;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Stripe;
 using System.Text;
 
@@ -72,13 +70,13 @@ namespace ECommerceElctronics.Api
 
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
 
             // For Configure Swagger Authentication 
             builder.Services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
+                option.SwaggerDoc("v1", new OpenApiInfo()
                 {
                     Title = "Elctronic",
                     Version = "v1"
@@ -94,24 +92,26 @@ namespace ECommerceElctronics.Api
                     Scheme = "bearer"
                 });
 
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        []
-                    }
-                });
+                //option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                //{
+                //    {
+                //        new OpenApiSecurityScheme
+                //        {
+                //            //Reference = new BaseOpenApiReference
+                //            //{
+                //            //    Type = ReferenceType.SecurityScheme,
+                //            //    Id = "Bearer"
+                //            //}
+                //        },
+                //        []
+                //    }
+                //});
             });
 
+            // AutoMapper Configuration
+            var signingKey = builder.Configuration.GetValue<string>("AutoMapperConfig:SigningKey");
 
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddAutoMapper(cfg => cfg.LicenseKey = signingKey, AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAuthServices, AuthServices>();

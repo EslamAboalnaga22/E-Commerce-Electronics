@@ -9,17 +9,10 @@ namespace ECommerceElctronics.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BasesController : ControllerBase
+    public class BasesController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : ControllerBase
     {
-        protected readonly IUnitOfWork _unitOfWork;
-        protected readonly IMapper _mapper;
-        protected readonly IMediator _mediator;
-
-        public BasesController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _mediator = mediator;
-        }
+        protected readonly IUnitOfWork _unitOfWork = unitOfWork;
+        protected readonly IMapper _mapper = mapper;
+        protected readonly IMediator _mediator = mediator;
     }
 }

@@ -1,27 +1,13 @@
 ﻿using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using ECommerceElctronics.Entities.Dtos.Responses;
 
 
 namespace ECommerceElctronics.DataServices.Repositories
 {
-    public class ProductRepository : GenericRepository<Product>, IProductRepository
+    public class ProductRepository(AppDbContext context) : GenericRepository<Product>(context), IProductRepository
     {
-        public ProductRepository(AppDbContext context) : base(context)
-        {
-           
-
-        }
-
         public override async Task<IEnumerable<Product>> GetAll()
         {
             return await context.Products

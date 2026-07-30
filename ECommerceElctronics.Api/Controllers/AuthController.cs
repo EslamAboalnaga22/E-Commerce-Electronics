@@ -2,23 +2,17 @@
 using ECommerceElctronics.DataServices.Services;
 using ECommerceElctronics.Entities.Dtos.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceElctronics.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController(IAuthServices authServices, IMailServices mailServices) : ControllerBase
     {
-        private readonly IAuthServices _authServices;
-        private readonly IMailServices _mailServices;
+        private readonly IAuthServices _authServices = authServices;
+        private readonly IMailServices _mailServices = mailServices;
 
-        public AuthController(IAuthServices authServices, IMailServices mailServices)
-        {
-            _authServices = authServices;
-            _mailServices = mailServices;
-        }
         private void SetRefreshTokenInCookies(string refreshToken, DateTime expires)
         {
             var cookiesOption = new CookieOptions
@@ -29,6 +23,7 @@ namespace ECommerceElctronics.Api.Controllers
 
             Response.Cookies.Append("refreshToken", refreshToken, cookiesOption);
         }
+
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
