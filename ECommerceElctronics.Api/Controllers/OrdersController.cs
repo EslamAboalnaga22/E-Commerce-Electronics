@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.Order;
 using ECommerceElctronics.Api.CQRS.Commands.OrderFolder;
 using ECommerceElctronics.Api.CQRS.Queries.OrderFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
@@ -8,7 +7,6 @@ using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.NetworkInformation;
 
 namespace ECommerceElctronics.Api.Controllers
 {
