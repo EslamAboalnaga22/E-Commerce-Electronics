@@ -269,4 +269,4 @@ Stripe Integration includes:
 **Eslam Aboalnaga**
 
 - GitHub: https://github.com/EslamAboalnaga22
-- LinkedIn: [@Eslam Aboalnaga](www.linkedin.com/in/eslam-aboalnaga)
+- LinkedIn: [@Eslam Aboalnaga](https://www.linkedin.com/in/eslam-aboalnaga/)
