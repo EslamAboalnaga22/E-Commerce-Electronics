@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.Cart;
-using ECommerceElctronics.Api.CQRS.Commands.CartFolder;
-using ECommerceElctronics.Api.CQRS.Queries.CartFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.Cart;
+using ECommerceElctronics.DataServices.CQRS.Commands.CartFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.CartFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using MediatR;

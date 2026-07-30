@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.UserFolder;
-using ECommerceElctronics.Api.CQRS.Queries.UserFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.UserFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.UserFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Models;
 using MediatR;

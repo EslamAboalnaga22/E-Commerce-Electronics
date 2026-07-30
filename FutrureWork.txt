@@ -1,11 +1,14 @@
 [ Future Work ]
 ---------------
---> Turn it into .NET 10
---> Update Cart and Order
+--> [Done] Turn it into .NET 10
+--> [Done] Update Cart and Order
 --> Add Simulation For Status Transitions After Order
 --> Edit Roles
---> Add Result Pattern
+--> Product Search, Filtring, Sorting
+--> Pagination
+--> Cupon System
+--> [Done] Add Result Pattern
 --> Add Caching 
 --> Get User Id When User Loing and Pass It into Cart and Order
---> [maybe] Turn it into Clean Architecture
---> [maybe] Turn it into Frontend using BlazorWebAssembly
+--> (maybe) Turn it into Clean Architecture
+--> (maybe) Turn it into Frontend using BlazorWebAssembly

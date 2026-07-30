@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.ProductFolder;
-using ECommerceElctronics.Api.CQRS.Queries.ProductFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.ProductFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.ProductFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using MediatR;
@@ -56,9 +56,6 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == false)
-                return BadRequest();
-
             return NoContent();
         }
 
@@ -72,9 +69,6 @@ namespace ECommerceElctronics.Api.Controllers
             var command = new DeleteProductCommand(productId);
 
             var result = await _mediator.Send(command);
-
-            if (result == false)
-                return BadRequest();
 
             return NoContent();
         }

@@ -1,9 +1,8 @@
-
+using ECommerceElctronics.DataServices.CQRS.Handlers.BrandFolder;
 using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.DataServices.Services;
-using ECommerceElctronics.Entities.Dtos;
 using ECommerceElctronics.Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -119,7 +118,7 @@ namespace ECommerceElctronics.Api
             builder.Services.AddScoped<IStripeServices, StripeServices>();
 
 
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllBrandsHandler).Assembly));
 
             var app = builder.Build();
 

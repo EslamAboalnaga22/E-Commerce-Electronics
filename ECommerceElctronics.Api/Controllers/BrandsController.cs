@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.BrandFolder;
-using ECommerceElctronics.Api.CQRS.Queries.BrandFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.BrandFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.BrandFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
@@ -19,7 +19,11 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            //return Ok(result);
+            return result.Map<IActionResult>(
+                onSuccess: result => Ok(result),
+                onFailure: error => BadRequest(error.Message)
+                );
         }
 
         [HttpGet("{brandId}")]
@@ -29,7 +33,11 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            //return Ok(result);
+            return result.Map<IActionResult>(
+                 onSuccess: result => Ok(result),
+                 onFailure: error => BadRequest(error.Message)
+                 );
         }
 
         [HttpPost]
@@ -57,9 +65,6 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == false)
-                return BadRequest();
-
             return NoContent();
         }
         [HttpDelete("{brandId}")]
@@ -72,9 +77,6 @@ namespace ECommerceElctronics.Api.Controllers
             var command = new DeleteBrandCommand(brandId);
 
             var result = await _mediator.Send(command);
-
-            if (result == false)
-                return BadRequest();
 
             return NoContent();
         }

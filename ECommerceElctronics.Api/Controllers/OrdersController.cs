@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.OrderFolder;
-using ECommerceElctronics.Api.CQRS.Queries.OrderFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.OrderFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.OrderFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
@@ -85,9 +85,6 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == false)
-                return BadRequest();
-
             return NoContent();
         }
 
@@ -101,9 +98,6 @@ namespace ECommerceElctronics.Api.Controllers
             var command = new DeleteOrderCommand(orderId);
 
             var result = await _mediator.Send(command);
-
-            if (result == false)
-                return BadRequest();
 
             return NoContent();
         }

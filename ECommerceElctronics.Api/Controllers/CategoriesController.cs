@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.Api.CQRS.Commands.CategoryFolder;
-using ECommerceElctronics.Api.CQRS.Queries.CategoryFolder;
+using ECommerceElctronics.DataServices.CQRS.Commands.CategoryFolder;
+using ECommerceElctronics.DataServices.CQRS.Queries.CategoryFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Dtos.Requests;
 using ECommerceElctronics.Entities.Models;
@@ -57,9 +57,6 @@ namespace ECommerceElctronics.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result == false)
-                return BadRequest();
-
             return NoContent();
         }
         [HttpDelete("{categoryId}")]
@@ -72,9 +69,6 @@ namespace ECommerceElctronics.Api.Controllers
             var command = new DeleteCategoryCommand(categoryId);
 
             var result = await _mediator.Send(command);
-
-            if (result == false)
-                return BadRequest();
 
             return NoContent();
         }
