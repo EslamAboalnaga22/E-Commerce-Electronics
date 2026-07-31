@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.DataServices.ResultPattern;
 using ECommerceElctronics.DataServices.CQRS.Commands.ProductFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
+using ECommerceElctronics.DataServices.ResultPattern;
 using ECommerceElctronics.Entities.Dtos.Responses;
 using ECommerceElctronics.Entities.Models;
 using MediatR;

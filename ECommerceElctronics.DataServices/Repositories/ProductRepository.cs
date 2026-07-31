@@ -2,6 +2,8 @@
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using static Org.BouncyCastle.Asn1.Cmp.Challenge;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace ECommerceElctronics.DataServices.Repositories
@@ -23,6 +25,7 @@ namespace ECommerceElctronics.DataServices.Repositories
                 .Include(x => x.Category)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
+
         public override async Task<bool> Update(Product entity)
         {
            var product = await GetById(entity.Id);
@@ -39,6 +42,40 @@ namespace ECommerceElctronics.DataServices.Repositories
             product.Image = entity.Image;
 
             return true;
+        }
+
+        public async Task<IEnumerable<Product>> SearchProduct(string text)
+        {
+            return await context.Products
+                .AsNoTracking()
+                .Where(x=> x.Name.Contains(text ,                         StringComparison.CurrentCultureIgnoreCase))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> FilterProductByLessPrice(decimal Price)
+        {
+            return await context.Products
+                .AsNoTracking()
+                .Where(x => x.Price <= Price)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> FilterProductByBrandName(string brand)
+        {
+            return await context.Products
+                .Include(x => x.Brand)
+                .AsNoTracking()
+                .Where(x => x.Brand.Name == brand)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> FilterProductByCategoryName(string category)
+        {
+            return await context.Products
+                .Include(x => x.Category)
+                .AsNoTracking()
+                .Where(x => x.Category.Name == category)
+                .ToListAsync();
         }
     }
 }

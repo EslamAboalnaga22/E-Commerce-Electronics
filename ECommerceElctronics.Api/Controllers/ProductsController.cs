@@ -31,6 +31,46 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/Search")]
+        public async Task<IActionResult> GetSearchProduct(string txt)
+        {
+            var query = new SearchProductQuery(txt);
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpGet("/filter/LessPrice/{price:decimal}")]
+        public async Task<IActionResult> GetLessPriceProduct(decimal price)
+        {
+            var query = new FilterProductByLessPriceQuery(price);
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpGet("/filter/Brand")]
+        public async Task<IActionResult> GetProductsByBrandName(string brand)
+        {
+            var query = new FilterProductByBrandNameQuery(brand);
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
+        [HttpGet("/filter/Category")]
+        public async Task<IActionResult> GetProductsByCategoryName(string category)
+        {
+            var query = new FilterProductByCategoryNameQuery(category);
+
+            var result = await _mediator.Send(query);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProduct([FromForm] CreateProductRequest brand)

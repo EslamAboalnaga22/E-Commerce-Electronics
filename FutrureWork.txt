@@ -4,7 +4,7 @@
 --> [Done] Update Cart and Order
 --> Add Simulation For Status Transitions After Order
 --> Edit Roles
---> Product Search, Filtring, Sorting
+--> [Done] Product Search, Filtring, Sorting
 --> Pagination
 --> Cupon System
 --> [Done] Add Result Pattern
