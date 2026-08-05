@@ -59,20 +59,83 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Cancel/{orderId:int}")]
-        public async Task<IActionResult> CancelOrder(int orderId)
+        [HttpPut("Status/Pay/{orderId:int}")]
+        public async Task<IActionResult> PayOrder(int orderId)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var command = new CancelOrderCommand(orderId);
+            var command = new StatusPayOrderCommand(orderId);
 
             var result = await _mediator.Send(command);
 
             return Ok(result);
         }
 
- 
+        [HttpPut("Status/Processing/{orderId:int}")]
+        public async Task<IActionResult> ProcessingOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new StatusProcessingOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("Status/Ship/{orderId:int}")]
+        public async Task<IActionResult> ShipOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new StatusShipOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("Status/Deliver/{orderId:int}")]
+        public async Task<IActionResult> DeliverOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new StatusDeliverOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("Status/Cancel/{orderId:int}")]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new StatusCancelOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPut("Status/Refuned/{orderId:int}")]
+        public async Task<IActionResult> RefunedOrder(int orderId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var command = new StatusRefunedOrderCommand(orderId);
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
 
         [HttpPut("{orderId}")]
         [Authorize(Roles = "Admin")]

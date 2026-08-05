@@ -20,7 +20,7 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.Cart
             {
                 UserId = request.UserId,
                 CreatedAt = DateTime.UtcNow,
-                Status = OrderStatus.Pending,
+                //Status = OrderStatus.Pending,
             };
 
             decimal total = 0;

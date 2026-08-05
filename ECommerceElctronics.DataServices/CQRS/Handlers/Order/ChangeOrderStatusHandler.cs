@@ -16,7 +16,7 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.OrderFolder
             if (order == null)
                 return Result<bool>.Failure(new("Order Not Found", "Readed"));
 
-            order.Status = request.Status;
+            //order.Status = request.Status;
 
             await _unitOfWork.CompleteAsync();
 

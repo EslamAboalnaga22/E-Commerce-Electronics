@@ -13,10 +13,10 @@ namespace ECommerceElctronics.DataServices.MappingProfiles
             CreateMap<Product, GetProductDetailsResponse>()
                 .ForMember(
                    dest => dest.Brand,
-                   opt => opt.MapFrom(src => src.Brand.Name))
+                   opt => opt.MapFrom(src => src.Brand!.Name))
                 .ForMember(
                    dest => dest.Category,
-                   opt => opt.MapFrom(src => src.Category.Name));
+                   opt => opt.MapFrom(src => src.Category!.Name));
 
             CreateMap<Cart, CartDtoResponse>()
                 .ForMember(
@@ -25,7 +25,13 @@ namespace ECommerceElctronics.DataServices.MappingProfiles
 
             CreateMap<CartItem, CartItemsDtoResponse>();
 
-            CreateMap<Order, OrderDtoResponse>();
+            CreateMap<Order, OrderDtoResponse>()
+                .ForMember(
+                   dest => dest.Status,
+                   opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(
+                   dest => dest.TotalItems,
+                   opt => opt.MapFrom(src => src.Items.Count()));
 
             CreateMap<OrderItem, OrderItemDto>();
 

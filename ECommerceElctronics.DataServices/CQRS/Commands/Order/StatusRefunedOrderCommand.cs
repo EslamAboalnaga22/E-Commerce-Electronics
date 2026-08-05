@@ -3,5 +3,5 @@ using MediatR;
 
 namespace ECommerceElctronics.DataServices.CQRS.Commands.OrderFolder
 {
-    public record CancelOrderCommand(int OrderId) : IRequest<Result<bool>>;
+    public record StatusRefunedOrderCommand(int OrderId) : IRequest<Result<bool>>;
 }

@@ -65,7 +65,7 @@ namespace ECommerceElctronics.DataServices.Repositories
             return await context.Products
                 .Include(x => x.Brand)
                 .AsNoTracking()
-                .Where(x => x.Brand.Name == brand)
+                .Where(x => x.Brand!.Name == brand)
                 .ToListAsync();
         }
 
@@ -74,7 +74,7 @@ namespace ECommerceElctronics.DataServices.Repositories
             return await context.Products
                 .Include(x => x.Category)
                 .AsNoTracking()
-                .Where(x => x.Category.Name == category)
+                .Where(x => x.Category!.Name == category)
                 .ToListAsync();
         }
     }

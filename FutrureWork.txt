@@ -2,12 +2,12 @@
 ---------------
 --> [Done] Turn it into .NET 10
 --> [Done] Update Cart and Order
---> Add Simulation For Status Transitions After Order
---> Edit Roles
+--> [Done] Add Simulation For Status Transitions After Order
 --> [Done] Product Search, Filtring, Sorting
+--> [Done] Add Result Pattern
+--> Edit Roles
 --> Pagination
 --> Cupon System
---> [Done] Add Result Pattern
 --> Add Caching 
 --> Get User Id When User Loing and Pass It into Cart and Order
 --> (maybe) Turn it into Clean Architecture

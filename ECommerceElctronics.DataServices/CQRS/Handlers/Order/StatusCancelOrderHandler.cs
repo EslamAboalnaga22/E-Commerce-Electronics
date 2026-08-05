@@ -6,11 +6,11 @@ using MediatR;
 
 namespace ECommerceElctronics.DataServices.CQRS.Handlers.OrderFolder
 {
-    public class CancelOrderHandler(IUnitOfWork unitOfWork) : IRequestHandler<CancelOrderCommand, Result<bool>>
+    public class StatusCancelOrderHandler(IUnitOfWork unitOfWork) : IRequestHandler<StatusCancelOrderCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-        async Task<Result<bool>> IRequestHandler<CancelOrderCommand, Result<bool>>.Handle(CancelOrderCommand request, CancellationToken cancellationToken)
+        async Task<Result<bool>> IRequestHandler<StatusCancelOrderCommand, Result<bool>>.Handle(StatusCancelOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _unitOfWork.Orders.GetById(request.OrderId);
 
@@ -20,7 +20,10 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.OrderFolder
             if(order.Status == OrderStatus.Delivered || order.Status == OrderStatus.Shipped)
                 return Result<bool>.Failure(new("Cannot Cancel", "Readed"));
 
-            order.Status = OrderStatus.Cancelled;
+            var result = order.Cancel();
+
+            if (!result)
+                return Result<bool>.Failure(new("Order Maybe Shipped Or Deliverd", "Readed"));
 
             await _unitOfWork.CompleteAsync();
 
