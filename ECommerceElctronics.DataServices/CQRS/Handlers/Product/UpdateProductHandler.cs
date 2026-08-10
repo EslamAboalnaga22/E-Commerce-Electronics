@@ -6,15 +6,17 @@ using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ECommerceElctronics.DataServicesDataServices.CQRS.Handlers.ProductFolder
 {
-    public class UpdateProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment) : IRequestHandler<UpdateProductCommand, Result<bool>>
+    public class UpdateProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment, IOutputCacheStore outputCacheStore) : IRequestHandler<UpdateProductCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
         private readonly IWebHostEnvironment environment = environment;
         private readonly string ImagePath = $"{environment.WebRootPath}/images/products";
+        private readonly IOutputCacheStore _outputCacheStore = outputCacheStore;
 
         public async Task<Result<bool>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
@@ -42,12 +44,17 @@ namespace ECommerceElctronics.DataServicesDataServices.CQRS.Handlers.ProductFold
                     File.Delete(cover);
                 }
 
+                await _outputCacheStore.EvictByTagAsync("Products", cancellationToken);
+
                 return Result<bool>.Success(true);
             }
             else // if update no complete and pic save id server -> this remove pic from server
             {
                 var cover = Path.Combine(ImagePath, product.Image);
                 File.Delete(cover);
+
+                await _outputCacheStore.EvictByTagAsync("Products", cancellationToken);
+
                 return Result<bool>.Failure(new("Remove Picture From Server", "Photo"));
             }
         }

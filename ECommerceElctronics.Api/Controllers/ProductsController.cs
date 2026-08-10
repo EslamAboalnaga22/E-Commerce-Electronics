@@ -6,12 +6,14 @@ using ECommerceElctronics.Entities.Dtos.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ECommerceElctronics.Api.Controllers
 {
     public class ProductsController(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator) : BasesController(unitOfWork, mapper, mediator)
     {
         [HttpGet]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetAllProducts()
         {
             var query = new GetAllProductsQuery();
@@ -22,6 +24,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("{productId}")]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetByIdProduct(int productId)
         {
             var query = new GetByIdProductQuery(productId);
@@ -32,6 +35,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("/Search")]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetSearchProduct(string txt)
         {
             var query = new SearchProductQuery(txt);
@@ -42,6 +46,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("/filter/LessPrice/{price:decimal}")]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetLessPriceProduct(decimal price)
         {
             var query = new FilterProductByLessPriceQuery(price);
@@ -52,6 +57,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("/filter/Brand")]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetProductsByBrandName(string brand)
         {
             var query = new FilterProductByBrandNameQuery(brand);
@@ -62,6 +68,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpGet("/filter/Category")]
+        [OutputCache(PolicyName = "ProductsPolicy")]
         public async Task<IActionResult> GetProductsByCategoryName(string category)
         {
             var query = new FilterProductByCategoryNameQuery(category);
@@ -72,7 +79,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProduct([FromForm] CreateProductRequest brand)
         {
             if (!ModelState.IsValid)
@@ -86,7 +93,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPut("{productId}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int productId, [FromForm] UpdateProductRequest productRequest)
         {
             if (!ModelState.IsValid)
@@ -100,7 +107,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpDelete("{productId}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             if (!ModelState.IsValid)

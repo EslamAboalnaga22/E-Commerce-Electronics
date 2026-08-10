@@ -45,7 +45,7 @@ namespace ECommerceElctronics.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Ceckout/{userId:int}")]
+        [HttpPost("Ceckout/{UesrId:int}")]
         public async Task<IActionResult> Ceckout(int UesrId)
         {
             var command = new CheckoutCommand(UesrId);

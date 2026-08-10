@@ -8,7 +8,7 @@
 --> Edit Roles
 --> Pagination
 --> Cupon System
---> Add Caching 
+--> [Done] Add Caching 
 --> Get User Id When User Loing and Pass It into Cart and Order
 --> (maybe) Turn it into Clean Architecture
 --> (maybe) Turn it into Frontend using BlazorWebAssembly

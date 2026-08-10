@@ -7,15 +7,17 @@ using ECommerceElctronics.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ECommerceElctronics.DataServices.CQRS.Handlers.ProductFolder
 {
-    public class CreateProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment) : IRequestHandler<CreateProductCommand, Result<GetProductDetailsResponse>>
+    public class CreateProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment, IOutputCacheStore outputCacheStore) : IRequestHandler<CreateProductCommand, Result<GetProductDetailsResponse>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
         private readonly IWebHostEnvironment environment = environment;
         private readonly string ImagePath = $"{environment.WebRootPath}/images/products";
+        private readonly IOutputCacheStore _outputCacheStore = outputCacheStore;
 
         public async Task<Result<GetProductDetailsResponse>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
@@ -32,6 +34,8 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.ProductFolder
             await _unitOfWork.CompleteAsync();
 
             var result = _mapper.Map<GetProductDetailsResponse>(product);
+
+            await _outputCacheStore.EvictByTagAsync("Products", cancellationToken);
 
             return Result<GetProductDetailsResponse>.Success(result);
         }

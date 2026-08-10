@@ -41,7 +41,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddBrand([FromBody] CreateBrandRequest brand)
         {
             if (!ModelState.IsValid)
@@ -55,7 +55,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateBrand([FromBody] Brand brand)
         {
             if (!ModelState.IsValid)

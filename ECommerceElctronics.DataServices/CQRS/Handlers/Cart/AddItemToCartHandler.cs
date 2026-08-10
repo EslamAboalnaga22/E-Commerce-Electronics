@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
-using ECommerceElctronics.DataServices.ResultPattern;
 using ECommerceElctronics.DataServices.CQRS.Commands.CartFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
+using ECommerceElctronics.DataServices.ResultPattern;
+using ECommerceElctronics.DataServices.Services.Caching;
 using MediatR;
 
 namespace ECommerceElctronics.DataServices.CQRS.Handlers.CartFolder
 {
-    public class AddItemToCartHandler(IUnitOfWork unitOfWork, IMapper mapper) : IRequestHandler<AddItemToCartCommand, Result<bool>>
+    public class AddItemToCartHandler(IUnitOfWork unitOfWork, IMapper mapper, IRedisServices redisServices) : IRequestHandler<AddItemToCartCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
+        private readonly IRedisServices _redisServices = redisServices;
 
         public async Task<Result<bool>> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
         {
@@ -48,6 +50,15 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.CartFolder
                 item.Quantity += request.AddItemCart.Quentity;
                 await _unitOfWork.CompleteAsync();
             }
+
+            var cacheKeyUser = $"cart_{request.AddItemCart.UserId}";
+            _redisServices.RemoveData(cacheKeyUser);
+
+            var cacheKeyCart = $"cart_{cart.Id}";
+            _redisServices.RemoveData(cacheKeyCart);
+
+            var cacheKeyCarts = $"all-Carts";
+            _redisServices.RemoveData(cacheKeyCarts);
 
             return Result<bool>.Success(true);
         }

@@ -4,15 +4,17 @@ using ECommerceElctronics.DataServices.CQRS.Commands.ProductFolder;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace ECommerceElctronics.DataServices.CQRS.Handlers.ProductFolder
 {
-    public class DeleteProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment) : IRequestHandler<DeleteProductCommand, Result<bool>>
+    public class DeleteProductHandler(IUnitOfWork unitOfWork, IMapper mapper, IWebHostEnvironment environment, IOutputCacheStore outputCacheStore) : IRequestHandler<DeleteProductCommand, Result<bool>>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
         private readonly IWebHostEnvironment environment = environment;
         private readonly string ImagePath = $"{environment.WebRootPath}/images/products";
+        private readonly IOutputCacheStore _outputCacheStore = outputCacheStore;
 
         public async Task<Result<bool>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
@@ -33,6 +35,8 @@ namespace ECommerceElctronics.DataServices.CQRS.Handlers.ProductFolder
                 var cover = Path.Combine(ImagePath, product.Image);
                 File.Delete(cover);
             }
+
+            await _outputCacheStore.EvictByTagAsync("Products", cancellationToken);
 
             return Result<bool>.Success(true);
         }

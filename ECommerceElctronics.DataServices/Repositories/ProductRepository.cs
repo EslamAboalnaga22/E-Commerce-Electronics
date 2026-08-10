@@ -48,7 +48,7 @@ namespace ECommerceElctronics.DataServices.Repositories
         {
             return await context.Products
                 .AsNoTracking()
-                .Where(x=> x.Name.Contains(text ,                         StringComparison.CurrentCultureIgnoreCase))
+                .Where(x=> x.Name.Contains(text))
                 .ToListAsync();
         }
 

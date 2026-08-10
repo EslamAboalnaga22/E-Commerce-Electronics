@@ -33,7 +33,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddCategory([FromBody] CreateCategoryRequest category)
         {
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace ECommerceElctronics.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory([FromBody] Category category)
         {
             if (!ModelState.IsValid)

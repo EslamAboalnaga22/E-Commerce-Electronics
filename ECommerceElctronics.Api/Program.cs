@@ -3,6 +3,7 @@ using ECommerceElctronics.DataServices.Data;
 using ECommerceElctronics.DataServices.Repositories;
 using ECommerceElctronics.DataServices.Repositories.Interfaces;
 using ECommerceElctronics.DataServices.Services;
+using ECommerceElctronics.DataServices.Services.Caching;
 using ECommerceElctronics.Entities.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -72,6 +73,26 @@ namespace ECommerceElctronics.Api
 
             builder.Services.AddEndpointsApiExplorer();
 
+            //Caching 
+            // -- In-Memory Cache
+            builder.Services.AddMemoryCache();
+            // -- Distributed Cache
+            builder.Services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = builder.Configuration.GetConnectionString("Redis");
+                options.InstanceName = "MyApp:";
+            });
+            // -- Output Cache
+            builder.Services.AddOutputCache(options =>
+            {
+                options.AddPolicy("ProductsPolicy", policy =>
+                {
+                    policy.Expire(TimeSpan.FromSeconds(60));
+                    policy.Tag("Products");
+                    policy.SetLocking(true);
+                });
+            });
+
             // For Configure Swagger Authentication 
             builder.Services.AddSwaggerGen(option =>
             {
@@ -116,6 +137,8 @@ namespace ECommerceElctronics.Api
             builder.Services.AddScoped<IAuthServices, AuthServices>();
             builder.Services.AddScoped<IMailServices, MailServices>();
             builder.Services.AddScoped<IStripeServices, StripeServices>();
+            builder.Services.AddScoped<ICacheSerivces, CacheSerivces>();
+            builder.Services.AddScoped<IRedisServices, RedisServices>();
 
 
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetAllBrandsHandler).Assembly));
@@ -130,6 +153,8 @@ namespace ECommerceElctronics.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseOutputCache();
 
             app.UseAuthentication();
             app.UseAuthorization();
